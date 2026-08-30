@@ -104,11 +104,14 @@ COPY --from=build /usr/local/lib /usr/local/lib
 RUN ldconfig
 
 # CATS does not have a docker image available so we need to use .deb download from local machine.
-COPY cats-sdr-igate_0.1.0-1_amd64.deb /tmp/
+# COPY cats-sdr-igate_0.1.0-1_amd64.deb /tmp/
+COPY cats-sdr-igate_0.1.0-1_arm64.deb /tmp/
 
 RUN apt-get update && \
-    dpkg -i /tmp/cats-sdr-igate_0.1.0-1_amd64.deb || apt-get -f install -y && \
-    rm /tmp/cats-sdr-igate_0.1.0-1_amd64.deb && \
+    # dpkg -i /tmp/cats-sdr-igate_0.1.0-1_amd64.deb || apt-get -f install -y && \
+    dpkg -i /tmp/cats-sdr-igate_0.1.0-1_arm64.deb || apt-get -f install -y && \
+    # rm /tmp/cats-sdr-igate_0.1.0-1_amd64.deb && \
+    rm /tmp/cats-sdr-igate_0.1.0-1_arm64.deb && \
     rm -rf /var/lib/apt/lists/*
 
 # Audio routing helper (tune + pcmrecord -> cats) and config are
